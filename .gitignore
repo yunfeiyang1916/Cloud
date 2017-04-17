@@ -2,7 +2,7 @@
 /Src/packages
 *.user
 /Src/Log/
-/Src/App_Data/
+/Src/Cloud.Web/App_Data/
 **/bin
 **/obj
 **/Log

@@ -9,7 +9,7 @@
 
 2、XCode相关源码地址：https://github.com/NewLifeX/X
 
-2、该项目前端使用NFine皮肤，http://www.nfine.cn/ 
+3、该项目前端使用NFine皮肤，http://www.nfine.cn/ 
  
 
 #### 引用说明   
