@@ -1,0 +1,54 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>气泡图</title>
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <script src="~/Content/global/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts-more.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#container").highcharts({
+                //图表
+                chart: {
+                    //类型，气泡图
+                    type: 'bubble',
+                    //zoomType: 'xy'
+                },
+                //标题
+                title: {
+                    text: "主标题"
+                },
+                //副标题
+                subtitle: {
+                    text: document.ontouchstart ? '框选放大' : '手势放大'
+                },
+                //数据列
+                series: [
+                    {
+                        name: '类别1',
+                        data: [[97, 36, 79], [94, 74, 60], [68, 76, 58], [64, 87, 56], [68, 27, 73], [74, 99, 42], [7, 93, 87], [51, 69, 40], [38, 23, 33], [57, 86, 31]]
+                    },
+                    {
+                        name: '类别2',
+                        data: [[25, 10, 87], [2, 75, 59], [11, 54, 8], [86, 55, 93], [5, 3, 58], [90, 63, 44], [91, 33, 17], [97, 3, 56], [15, 67, 48], [54, 25, 81]]
+                    },
+                    {
+                        name: '类别3',
+                        data: [[47, 47, 21], [20, 12, 4], [6, 76, 91], [38, 30, 60], [57, 98, 64], [61, 17, 80], [83, 60, 13], [67, 78, 75], [64, 12, 10], [30, 77, 82]]
+                    }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

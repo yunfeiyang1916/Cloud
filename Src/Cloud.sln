@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.Core", "Cloud.Core\Cloud.Core.csproj", "{D8BBF4E6-E9BF-4361-B683-D5C458605D50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.Domain", "Cloud.Domain\Cloud.Domain.csproj", "{84A1F1E8-33E2-487D-9DF0-ED47529A86FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud.Web", "Cloud.Web\Cloud.Web.csproj", "{6A436784-D69B-44BF-9C00-AF0DAEAB651B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "云飞扬开发平台", "云飞扬开发平台", "{97DB0D1A-4248-474B-A132-5AEB9FB25709}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8BBF4E6-E9BF-4361-B683-D5C458605D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8BBF4E6-E9BF-4361-B683-D5C458605D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8BBF4E6-E9BF-4361-B683-D5C458605D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8BBF4E6-E9BF-4361-B683-D5C458605D50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84A1F1E8-33E2-487D-9DF0-ED47529A86FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84A1F1E8-33E2-487D-9DF0-ED47529A86FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84A1F1E8-33E2-487D-9DF0-ED47529A86FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84A1F1E8-33E2-487D-9DF0-ED47529A86FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A436784-D69B-44BF-9C00-AF0DAEAB651B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A436784-D69B-44BF-9C00-AF0DAEAB651B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A436784-D69B-44BF-9C00-AF0DAEAB651B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A436784-D69B-44BF-9C00-AF0DAEAB651B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D8BBF4E6-E9BF-4361-B683-D5C458605D50} = {97DB0D1A-4248-474B-A132-5AEB9FB25709}
+		{84A1F1E8-33E2-487D-9DF0-ED47529A86FA} = {97DB0D1A-4248-474B-A132-5AEB9FB25709}
+		{6A436784-D69B-44BF-9C00-AF0DAEAB651B} = {97DB0D1A-4248-474B-A132-5AEB9FB25709}
+	EndGlobalSection
+EndGlobal

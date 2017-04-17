@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>柱状图</title>
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <script src="~/Content/global/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#container").highcharts({
+                //图表
+                chart: {
+                    //类型，条形图
+                    type: "column",
+                    //缩放维度，水平缩放
+                    zoomType: "x"
+                },
+                //标题
+                title: {
+                    text: "月平均降雨量"
+                },
+                //副标题
+                subtitle: {
+                    text: document.ontouchstart ? '框选放大' : '手势放大'
+                },
+                //x轴
+                xAxis: {
+                    //分类
+                    categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                },
+                //y轴
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '降雨量 (mm)'
+                    }
+                },
+                //数据提示框,当鼠标悬停在某点上时，以框的形式提示该点的数据
+                tooltip: {
+                    headerFormat: '<span>{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                //数据列配置
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                //数据列
+                series: [{
+                    name: '北京',
+                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+                }, {
+                    name: '上海',
+                    data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+                }, {
+                    name: '广州',
+                    data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+                }, {
+                    name: '深圳',
+                    data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

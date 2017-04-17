@@ -1,0 +1,95 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>条形图</title>
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <script src="~/Content/global/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#container").highcharts({
+                //图表
+                chart: {
+                    //类型，条形图
+                    type: "bar",
+                },
+                //标题
+                title: {
+                    text: "世界人口"
+                },
+                //副标题
+                subtitle: {
+                    text: '副标题'
+                },
+                //x轴
+                xAxis: {
+                    //分类
+                    categories: ['非洲', '美洲', '亚洲', '欧洲', '大洋洲'],
+                    title: {
+                        text: null
+                    }
+                },
+                //y轴
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: '人口 (百万)',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                //数据提示框,当鼠标悬停在某点上时，以框的形式提示该点的数据
+                tooltip: {
+                    //数据列 y 值得后缀字符串
+                    valueSuffix: ' 百万'
+                },
+                //数据列配置
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 100,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor: '#FFFFFF',
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                //数据列
+                series: [{
+                    name: '1800年',
+                    data: [107, 31, 635, 203, 2]
+                }, {
+                    name: '1900年',
+                    data: [133, 156, 947, 408, 6]
+                }, {
+                    name: '2008年',
+                    data: [973, 914, 4054, 732, 34]
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

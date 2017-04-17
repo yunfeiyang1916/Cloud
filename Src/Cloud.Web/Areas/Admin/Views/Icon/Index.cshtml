@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="cloud.common.reload();"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+        <div class="btn-group">
+            <a authorize="yes" class="btn btn-primary dropdown-text" onclick="render();"><i class="fa fa-eraser"></i>重新生成</a>
+        </div>
+        <div class="operate">
+            <ul class="nav nav-pills">
+                <li class="first">已选中<span>1</span>项</li>
+                <li><a id="btnEdit" authorize="yes" onclick="edit()"><i class="fa fa-pencil-square-o"></i>编辑</a></li>
+                <li><a id="btnDelete" authorize="yes" onclick="remove()"><i class="fa fa-trash-o"></i>删除</a></li>
+                <li><a id="btnDetail" authorize="yes" onclick="detail()"><i class="fa fa-search-plus"></i>查看</a></li>
+                <li class="split"></li>
+            </ul>
+            <a href="javascript:void(0);" id="operateClose" class="close"></a>
+        </div>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtKey" type="text" class="form-control" placeholder="请输入要查询关键字" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btnSearch" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <ul id="gridList" class="listview"></ul>
+        <ul style="float:right;" id="gridPager"></ul>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Content/global/plugins/bootstrap-paginator/bootstrap-paginator.min.js"></script>
+    <script src="~/Content/pages/admin/Icon/icon.js"></script>
+    <script type="text/javascript">
+        //获取选中图标id
+        function getSelectedID() {
+            var gridList = $("#gridList");
+            var id = gridList.find("li.selected").data("id");
+            return id;
+        }
+
+        //编辑
+        function edit() {
+            var id = getSelectedID();
+            if (!id) {
+                cloud.modal.alert("id不能为空！", 0);
+                return;
+            }
+            cloud.modal.open({
+                id: "Form",
+                title: "编辑",
+                url: "/Admin/Icon/Edit?id=" + id,
+                width: "500px",
+                height: "340px",
+                callBack: function (iframeId, index, layero) {
+                    //旧用法，页面带参数时有时候容易导致iframe框架中的window对象name改变
+                    //top.frames[iframeId].submitForm();
+                    //新用法
+                    var iframe = layero.find('iframe')[0];
+                    var iframeWin = iframe.contentWindow;
+                    iframeWin.submitForm();
+                }
+            });
+        }
+        //查看详情
+        function detail() {
+            var id = getSelectedID();
+            if (!id) {
+                cloud.modal.alert("id不能为空！", 0);
+                return;
+            }
+            cloud.modal.open({
+                id: "Form",
+                title: "详情",
+                url: "/Admin/Icon/Detail?type=detail&id=" + id,
+                width: "500px",
+                height: "340px",
+                btn: null
+            });
+        }
+        //删除
+        function remove() {
+            var id = getSelectedID();
+            if (!id) {
+                cloud.modal.alert("id不能为空！", 0);
+                return;
+            }
+            cloud.form.delete({
+                url: "/Admin/Icon/Delete",
+                params: { id: id },
+                success: function (result) {
+                    //触发搜索按钮点击事件
+                    $("#btnSearch").trigger("click");
+                    //关闭操作按钮
+                    $("#operateClose").trigger("click");
+                }
+            })
+        }
+        //显示操作按钮
+        function showOperate() {
+            var $operate = $(".operate");
+            $operate.animate({ "left": 0 }, 200);
+        }
+        //重新生成图标
+        function render() {
+            //弹出是否确认重新生成
+            cloud.modal.confirm("注：您确定要重新生成吗？", function (r) {
+                if (r) {
+                    //显示正在加载遮罩层
+                    window.setTimeout(function () {
+                        $.ajax({
+                            url: "/Admin/Icon/Render",
+                            beforeSend: function () {
+                                cloud.common.loading(true, "正在执行...");
+                            },
+                            success: function (data) {
+                                if (data.Status === 1) {
+                                    cloud.modal.msg(data.Msg, data.Status);
+                                    //显示列表数据
+                                    showGridList({});
+                                } else {
+                                    cloud.modal.alert(data.Msg, data.Status);
+                                }
+                            }
+                        });
+                    }, 0);
+                }
+            });
+        }
+        $(function () {
+            //显示列表数据
+            showGridList({});
+            //绑定搜索事件
+            $("#btnSearch").click(function () {
+                var key = $("#txtKey").val();
+                showGridList({ params: { key: key } });
+            });
+            //绑定关闭操作按钮事件
+            $("#operateClose").click(function () {
+                $(".operate").animate({ "left": '-100.1%' }, 200);
+            });
+
+            //在ul上绑定带命名空间的点击事件，利用冒泡机制，在点击时判断是否是li元素触发，如果是才处理
+            //事件加上命名空间，是为了不想影响该元素的其他点击事件。比如$("#gridList").trigger("click")会触发所有点击事件，
+            //而$("#gridList").trigger("click.select")只会触发click.select事件;
+            $("#gridList").on("click.select", "li", function (e) {
+                var that = $(this);
+                //判断点击元素是否已经是选中状态，如果是则直接返回
+                if (that.hasClass("selected")) {
+                    return;
+                }
+                //为当前元素加上选中样式
+                that.addClass("selected");
+                //所有同辈元素移除选中样式
+                that.siblings().removeClass("selected");
+                //显示操作按钮
+                showOperate();
+            });
+        });
+    </script>
+
+}
+

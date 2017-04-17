@@ -1,0 +1,73 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>饼图</title>
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <script src="~/Content/global/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#container").highcharts({
+                //图表
+                chart: {
+                    //类型，饼图
+                    type: "pie",
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                //标题
+                title: {
+                    text: "2010年浏览器市场份额"
+                },
+                //数据提示框,当鼠标悬停在某点上时，以框的形式提示该点的数据
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                //数据列配置
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        },
+                        showInLegend: true
+                    }
+                },
+                //数据列
+                series: [{
+                    type: 'pie',
+                    name: '份额：',
+                    data: [
+                        ['Firefox', 45.0],
+                        ['IE', 26.8],
+                        {
+                            name: 'Chrome',
+                            y: 12.8,
+                            sliced: true,
+                            selected: true
+                        },
+                        ['Safari', 8.5],
+                        ['Opera', 6.2],
+                        ['Others', 0.7]
+                    ]
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

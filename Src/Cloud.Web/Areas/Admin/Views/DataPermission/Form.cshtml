@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form_Layout.cshtml";
+}
+
+<form id="form1">
+    <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+
+        <div class="tab-content" style="padding-top:15px;margin-right:30px;">
+            <div class="tab-pane active" id="base">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">名称</th>
+                        <td class="formValue">
+                            <input type="hidden" id="ID" name="ID" value="0" />
+                            <input class="form-control required" type="text" id="Name" name="Name" value="" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th class="formTitle">上级</th>
+                        <td class="formValue">
+                            <select id="ParentID" name="ParentID" class="form-control  required"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">排序</th>
+                        <td class="formValue">
+                            <input class="form-control" type="text" id="Sort" name="Sort" value="0" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle" valign="top" style="padding-top: 5px;">
+                            备注
+                        </th>
+                        <td class="formValue">
+                            <textarea id="Remark" name="Remark" class="form-control" style="height: 100px;"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="~/Content/pages/admin/Button/button.js"></script>
+    <script type="text/javascript">
+        //获取当前页面的请求参数，以对象的形式返回
+        var requestData = cloud.common.getRequestData();
+        var options = {
+            //标题
+            title: "数据权限表单",
+            //单条数据查询地址
+            dataQueryOneUrl: "/Admin/DataPermission/GetOne",
+            //数据添加地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataAddUrl: "/Admin/DataPermission/Add",
+            //数据编辑地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataUpdateUrl: "/Admin/DataPermission/Edit",
+        };
+        //视图模型
+        var viewModel = new ViewModel(options);
+        /**初始化控件**/
+        function initControl() {
+            cloud.form.bindSelect($("#ParentID"), {
+                url: "/Admin/DataPermission/GetTreeList",
+                //显示文本对应字段
+                text: "TreeNodeText"
+            });
+            //id不为0说明是编辑或者查看详情页面
+            if (requestData.id != "0") {
+                //加载数据
+                viewModel.formLoad({
+                    params: { id: requestData.id },
+                    //请求类型
+                    type: requestData.type,
+                    success: function (result) {
+                        //将数据反序列化绑定到表单上
+                        cloud.form.deserialize("form1", result.Data);
+                        //从上级树筛选框中去掉自己
+                        var option = $("#ParentID option[value='" + requestData.id + "']");
+                        if (option) {
+                            option.remove();
+                        }
+                        //查看详情页面需要设置表单控件只读
+                        if (requestData.type == "detail") {
+                            var $form = $("#form1");
+                            $form.find('.form-control,select,input').attr('readonly', 'readonly');
+                            $form.find('div.ckbox label').attr('for', '');
+                        }
+                    }
+                });
+            }
+        }
+
+
+        $(function () {
+            initControl();
+        });
+    </script>
+
+}
+

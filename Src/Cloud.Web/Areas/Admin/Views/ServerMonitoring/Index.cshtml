@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "服务器监控";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+<div class="panel panel-default" style="margin-bottom: 10px;">
+    <div class="panel-heading">实时监控</div>
+    <div class="panel-body" style="padding: 0px;">
+        <div>
+            <div id="mainIIS" style="width: 33%; float: left; height: 250px;"></div>
+            <div id="mainCpu" style="width: 34%; float: left; height: 250px;"></div>
+            <div id="mainArm" style="width: 33%; float: left; height: 250px;"></div>
+        </div>
+        <div style="position: relative; top: -20px;">
+            <div style="width: 33%; float: left; text-align: center;">IIS使用率</div>
+            <div style="width: 34%; float: left; text-align: center;">CPU使用率</div>
+            <div style="width: 33%; float: left; text-align: center;">ARM使用率</div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default" style="margin-bottom: 10px;">
+    <div class="panel-heading">周监控</div>
+    <div class="panel-body" style="padding: 0px;padding-top:20px;">
+        <div id="mainWeek" style="height: 250px;"></div>
+    </div>
+</div>
+<div>
+    <div style="float: left; width: 49%;">
+        <div class="panel panel-default" style="margin-bottom: 10px;">
+            <div class="panel-heading">服务器信息</div>
+            <div class="panel-body" style="height: 300px;">
+                <table>
+                    <tr>
+                        <td>操作系统名称</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>操作系统版本</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>数据库服务器端口</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>数据库名称</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>用户名</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="float: right; width: 49%;">
+        <div class="panel panel-default" style="margin-bottom: 10px;">
+            <div class="panel-heading">数据库信息</div>
+            <div class="panel-body" style="height: 300px;">
+                <table>
+                    <tr>
+                        <td>数据库类型</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>数据库服务器地址</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>数据库服务器端口</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>数据库名称</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>用户名</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="clear: both;">
+</div>
+
+@section Scripts{
+    <script src="~/Content/global/plugins/echarts/echarts.min.js"></script>
+    <script src="~/Content/global/plugins/echarts/infographic.js"></script>
+    <script type="text/javascript">
+        //仪表盘通用配置
+        var gaugeOption = {
+            name: '业务指标',
+            type: 'gauge',
+            //分割段数，默认为5
+            splitNumber: 10,
+            //坐标轴线
+            axisLine: {
+                //属性lineStyle控制线条样式
+                lineStyle: {
+                    color: [[0.2, '#228b22'], [0.8, '#48b'], [1, '#ff4500']],
+                    width: 10
+                }
+            },
+            //坐标轴小标记
+            axisTick: {
+                //每份split细分多少段
+                splitNumber: 10,
+                //属性length控制线长
+                length: 12,
+                //属性lineStyle控制线条样式
+                lineStyle: {
+                    color: 'auto'
+                }
+            },
+            //坐标轴文本标签，详见axis.axisLabel
+            axisLabel: {
+                //其余属性默认使用全局文本样式，详见TEXTSTYLE
+                textStyle: {
+                    color: 'auto'
+                }
+            },
+            //分隔线
+            splitLine: {
+                //默认显示，属性show控制显示与否
+                show: true,
+                //属性length控制线长
+                length: 30,
+                //属性lineStyle（详见lineStyle）控制线条样式
+                lineStyle: {
+                    color: 'auto'
+                }
+            },
+            detail: {
+                formatter: '{value}%',
+                //其余属性默认使用全局文本样式，详见TEXTSTYLE
+                textStyle: {
+                    color: 'auto',
+                    fontWeight: 'bolder',
+                    fontSize: 20
+                }
+            }
+        };
+        //加载cpu仪表盘监控
+        function loadGaugeCpu() {
+            var chart = echarts.init(document.getElementById('mainCpu'), infographicTheme());
+            //复制gaugeOption，以防修改了serie后gaugeOption也跟着变
+            var serie = $.extend({}, gaugeOption);
+            serie["data"] = [{ value: 60 }];
+            //设置
+            var option = { series: [serie] };
+            chart.setOption(option);
+        }
+        //加载IIS仪表盘监控
+        function loadGaugeIIS() {
+            var chart = echarts.init(document.getElementById('mainIIS'), infographicTheme());
+            //复制gaugeOption，以防修改了serie后gaugeOption也跟着变
+            var serie = $.extend({}, gaugeOption);
+            serie["data"] = [{ value: 50 }];
+            //设置
+            var option = { series: [serie] };
+            chart.setOption(option);
+        }
+        //加载arm仪表盘监控
+        function loadGaugeArm() {
+            var chart = echarts.init(document.getElementById('mainArm'), infographicTheme());
+            //复制gaugeOption，以防修改了serie后gaugeOption也跟着变
+            var serie = $.extend({}, gaugeOption);
+            serie["data"] = [{ value: 20 }];
+            //设置
+            var option = { series: [serie] };
+            chart.setOption(option);
+        }
+        //加载周监控报表
+        function loadWeekChart() {
+            var chart = echarts.init(document.getElementById('mainWeek'));
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['IIS使用率', 'CPU使用率', 'ARM使用率']
+                },
+
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: 'IIS使用率', type: 'line',
+                        data: [20, 30, 21, 80, 90, 30, 25]
+                    },
+                    {
+                        name: 'CPU使用率', type: 'line',
+                        data: [34, 55, 45, 25, 60, 20, 88]
+                    },
+                    {
+                        name: 'ARM使用率', type: 'line',
+                        data: [23, 32, 33, 44, 66, 55, 28]
+                    }
+                ]
+            };
+            chart.setOption(option);
+        }
+        $(function () {
+            loadGaugeCpu();
+            loadGaugeIIS();
+            loadGaugeArm();
+            //加载周监控报表
+            loadWeekChart();
+        });
+    </script>
+}
+

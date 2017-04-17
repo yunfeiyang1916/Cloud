@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Select";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+
+<div class="topPanel">
+    <div class="search">
+        <table>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtKey" type="text" class="form-control" placeholder="请输入要查询关键字" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btnSearch" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <ul id="gridList" class="listview"></ul>
+        <ul style="float:right;" id="gridPager"></ul>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Content/global/plugins/bootstrap-paginator/bootstrap-paginator.min.js"></script>
+    <script src="~/Content/pages/admin/Icon/icon.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //显示列表数据
+            showGridList({});
+            //绑定搜索按钮
+            $("#btnSearch").click(function () {
+                var key = $("#txtKey").val();
+                showGridList({ params: { key: key } });
+            });
+            //在ul上绑定带命名空间的点击事件，利用冒泡机制，在点击时判断是否是li元素触发，如果是才处理
+            //事件加上命名空间，是为了不想影响该元素的其他点击事件。比如$("#gridList").trigger("click")会触发所有点击事件，
+            //而$("#gridList").trigger("click.select")只会触发click.select事件;
+            $("#gridList").on("click.select", "li", function (e) {
+                var that = $(this);
+                //判断点击元素是否已经是选中状态，如果是则直接返回
+                if (that.hasClass("selected")) {
+                    return;
+                }
+                //为当前元素加上选中样式
+                that.addClass("selected");
+                //所有同辈元素移除选中样式
+                that.siblings().removeClass("selected");
+            });
+        });
+    </script>
+
+}
+

@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>蛛网图</title>
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <script src="~/Content/global/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts-more.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#container").highcharts({
+                //图表
+                chart: {
+                    //雷达图
+                    polar: true,
+                    type: 'line'
+                },
+                //标题
+                title: {
+                    text: "蛛网图",
+                    x: -80
+                },
+                pane: {
+                    size: '80%'
+                },
+                //x轴
+                xAxis: {
+                    categories: ['销售', '市场', '开发', '客服', '技术', '管理'],
+                    tickmarkPlacement: 'on',
+                    lineWidth: 0
+                },
+                //y轴
+                yAxis: {
+                    gridLineInterpolation: 'polygon',
+                    lineWidth: 0,
+                    min: 0
+                },
+                legend: {
+                    align: 'right',
+                    verticalAlign: 'top',
+                    y: 70,
+                    layout: 'vertical'
+                },
+                //数据列
+                series: [{
+                    name: '列1',
+                    data: [43000, 19000, 60000, 35000, 17000, 10000],
+                    pointPlacement: 'on'
+                }, {
+                    name: '列2',
+                    data: [50000, 39000, 42000, 31000, 26000, 14000],
+                    pointPlacement: 'on'
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

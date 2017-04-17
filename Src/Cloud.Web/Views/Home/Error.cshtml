@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+    //http状态码
+    Int32 statusCode = ViewBag.StatusCode;
+    //状态说明
+    String statusText = ViewBag.StatusText;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>错误页</title>
+    <link href="~/Content/layouts/css/font.css" rel="stylesheet" />
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <link href="~/Content/global/plugins/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/layouts/css/ui.css" rel="stylesheet" />
+    <style type="text/css">
+        .middle-box {
+            max-width: 400px;
+            z-index: 100;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+
+            .middle-box h1 {
+                font-size: 170px;
+                color: #e7505a;
+            }
+             .middle-box h3 {
+                
+            }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="middle-box">
+            <h1>@statusCode</h1>
+            <h3 class="font-bold">@statusText</h3>
+        </div>
+    </div>
+</body>
+</html>

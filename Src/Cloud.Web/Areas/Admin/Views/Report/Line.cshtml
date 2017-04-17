@@ -1,0 +1,93 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>折线图</title>
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <script src="~/Content/global/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#container").highcharts({
+                //图表
+                chart: {
+                    //类型，直线（折线）图
+                    type: "line",
+                    //缩放维度，水平缩放
+                    zoomType: "x"
+                },
+                //标题
+                title: {
+                    text: "月平均温度"
+                },
+                //副标题
+                subtitle: {
+                    text: document.ontouchstart ? '框选放大' : '手势放大'
+                },
+                //x轴
+                xAxis: {
+                    //分类
+                    categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+                },
+                //y轴
+                yAxis: {
+                    //标题
+                    title: {
+                        text: '温度 (°C)'
+                    },
+                    //标示线
+                    plotLines: [{
+                        //值
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                //数据提示框,当鼠标悬停在某点上时，以框的形式提示该点的数据
+                tooltip: {
+                    //数据列 y 值得后缀字符串
+                    valueSuffix: '°C'
+                },
+                //数据列配置
+                plotOptions: {
+                    //针对所有图表有效的通用配置
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                //点单机时间
+                                click: function () {
+                                    alert(this.series.name + "," + this.x + "," + this.y)
+                                }
+                            }
+                        },
+                        marker: {
+                            lineWidth: 1
+                        }
+                    }
+                },
+                //数据列
+                series: [{
+                    name: '北京',
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                }, {
+                    name: '广州',
+                    data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+                }, {
+                    name: '深圳',
+                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

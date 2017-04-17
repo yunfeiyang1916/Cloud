@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form_Layout.cshtml";
+}
+
+<form id="form1">
+    <div style="padding-top:30px;margin-right:30px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">样式名称</th>
+                <td class="formValue">
+                    <input type="hidden" id="ID" name="ID" value="0" />
+                    <input class="form-control required" type="text" id="Name" name="Name" value="" readonly="readonly" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">排序</th>
+                <td class="formValue">
+                    <input class="form-control" type="text" id="Sort" name="Sort" value="0" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                    备注
+                </th>
+                <td class="formValue">
+                    <textarea id="Remark" name="Remark" class="form-control" style="height: 100px;"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+        //获取当前页面的请求参数，以对象的形式返回
+        var requestData = cloud.common.getRequestData();
+        /**初始化控件**/
+        function initControl() {
+            //id不为0说明是编辑或者查看详情页面
+            if (requestData.id != "0") {
+                //加载数据
+                cloud.form.load({
+                    url: "/Admin/Icon/GetOne",
+                    params: { id: requestData.id },
+                    success: function (result) {
+                        //将数据反序列化绑定到表单上
+                        cloud.form.deserialize("form1", result.Data);
+                        //查看详情页面需要设置表单控件只读
+                        if (requestData.type == "detail") {
+                            var $form = $("#form1");
+                            $form.find('.form-control,select,input').attr('readonly', 'readonly');
+                            $form.find('div.ckbox label').attr('for', '');
+                        }
+                    }
+                });
+            }
+        }
+        /**提交表单**/
+        function submitForm() {
+            var formID = "form1";
+            if (!cloud.form.valid(formID)) {
+                return false;
+            }
+            var url = requestData.id == "0" ? "/Admin/Icon/Add" : "/Admin/Icon/Edit";
+            cloud.form.submit({
+                url: url,
+                params: cloud.form.serialize(formID),
+                success: function (result) {
+                    var parentWin = cloud.common.currentWindow();
+                    //触发搜索按钮点击事件
+                    parentWin.$("#btnSearch").trigger("click");
+                    //关闭操作按钮
+                    parentWin.$("#operateClose").trigger("click");
+                }
+            });
+        }
+
+        $(function () {
+            initControl();
+        });
+    </script>
+
+}
+

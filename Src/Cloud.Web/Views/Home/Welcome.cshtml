@@ -1,0 +1,193 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>欢迎页</title>
+    <link href="~/Content/global/plugins/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/layouts/css/font.css" rel="stylesheet" />
+    <link href="~/Content/layouts/css/ui.css" rel="stylesheet" />
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <script src="~/Content/global/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/global/plugins/charts/Chart.min.js"></script>
+    <link href="~/Content/pages/home/welcome.css" rel="stylesheet" />
+    <script src="~/Content/pages/home/welcome.js"></script>
+</head>
+<body>
+    <div id="areascontent">
+        <div class="rows" style="margin-bottom: 1%; border: 1px solid #e6e6e6; overflow: hidden; padding-left: 1px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-line-chart fa-lg" style="padding-right: 5px;"></i>关键数据实时指标
+                    <div id="weatherContainer" style="float: right; position: relative; top: -4px; right: 0px;">
+                        
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="dashboard-stats">
+                        <div class="dashboard-stats-item" style="background-color: #fc8675;">
+                            <h2 class="m-top-none">8</h2>
+                            <h5>对私待处理任务</h5>
+                            <div class="stat-icon">
+                                <i class="fa fa-user fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="dashboard-stats-item" style="background-color: #6bafbd;">
+                            <h2 class="m-top-none">12</h2>
+                            <h5>对私待签收任务</h5>
+                            <div class="stat-icon">
+                                <i class="fa fa-hdd-o fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="dashboard-stats-item" style="background-color: #f3ce85;">
+                            <h2 class="m-top-none">2</h2>
+                            <h5>对公待处理任务</h5>
+                            <div class="stat-icon">
+                                <i class="fa fa-shopping-cart fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="dashboard-stats-item" style="background-color: #949FB1;">
+                            <h2 class="m-top-none">6</h2>
+                            <h5>对公待签收任务</h5>
+                            <div class="stat-icon">
+                                <i class="fa fa-gavel fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="dashboard-stats-item" style="background-color: #65cea7; margin-right: 0px;">
+                            <h2 class="m-top-none">268</h2>
+                            <h5>本月交易订单数量</h5>
+                            <div class="stat-icon">
+                                <i class="fa fa-truck fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rows" style="margin-bottom: 1%; overflow: hidden;">
+            <div style="float: left; width: 69%;">
+                <div style="height: 350px; border: 1px solid #e6e6e6; background-color: #fff;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-area-chart fa-lg" style="padding-right: 5px;"></i>考勤统计
+                            <div style="float: right">
+                                <span style="font-weight: 500;"><i class="fa fa-square" style="color: #dcdcdc; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>迟到</span>
+                                <span style="margin-left: 10px; font-weight: 500;"><i class="fa fa-square" style="color: #97bbcd; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>缺卡</span>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding-bottom: 0px;">
+                            <canvas id="salarychart" style="height: 285px; width: 100%; padding-right: 10px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="float: right; width: 30%;">
+                <div style="height: 350px; border: 1px solid #e6e6e6; background-color: #fff;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><i class="fa fa-pie-chart fa-lg" style="padding-right: 5px;"></i>请假统计</div>
+                        <div class="panel-body" style="padding-top: 20px;">
+                            <canvas id="leavechart" style="height: 160px; width: 100%;"></canvas>
+                            <div style="text-align: center; padding-top: 20px;">
+                                <span><i class="fa fa-square" style="color: #F7464A; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>事假</span>
+                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #46BFBD; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>病假</span>
+                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #FDB45C; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>公休假</span>
+                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #949FB1; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>调休假</span>
+                            </div>
+                            <div style="margin-top: 20px; padding-top: 18px; height: 60px; border-top: 1px solid #e6e6e6;">
+                                <div style="width: 25%; text-align: center; float: left;">
+                                    <span id="a_value">16.5小时</span>
+                                    <p style="color: #a1a1a1">事假</p>
+                                </div>
+                                <div style="width: 25%; text-align: center; float: left;">
+                                    <span id="b_value">7.5小时</span>
+                                    <p style="color: #a1a1a1">病假</p>
+                                </div>
+                                <div style="width: 25%; text-align: center; float: left;">
+                                    <span id="c_value">13小时</span>
+                                    <p style="color: #a1a1a1">公休假</p>
+                                </div>
+                                <div style="width: 25%; text-align: center; float: left;">
+                                    <span id="d_value">19小时</span>
+                                    <p style="color: #a1a1a1">调休假</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rows" style="overflow: hidden;">
+            <div style="float: left; width: 34%; margin-right: 1%;">
+                <div style="height: 265px; border: 1px solid #e6e6e6; background-color: #fff;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><i class="fa fa-thumbs-o-up fa-lg" style="padding-right: 5px;"></i>最新签约</div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="#">南京森鹿皮件服饰有限公司</a><span class="time">2016-07-21</span></li>
+                                <li><a href="#">曲靖市绿能燃气运输有限公司</a><span class="time">2016-07-20</span></li>
+                                <li><a href="#">青海航天信息有限公司</a><span class="time">2016-07-19</span></li>
+                                <li><a href="#">吉林省蔬菜花卉科学研究院</a><span class="time">2016-07-17</span></li>
+                                <li><a href="#">青海省广播电视信息网络股份有限公司</a><span class="time">2016-07-17</span></li>
+                                <li><a href="#">国营长空精密机械制造公司</a><span class="time">2016-07-13</span></li>
+                                <li><a href="#">广东友元国土信息工程有限公司</a><span class="time">2016-07-12</span></li>
+                                <li><a href="#">广东友元国土信息工程有限公司</a><span class="time">2016-07-12</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="float: left; width: 34%; margin-right: 1%;">
+                <div style="height: 265px; border: 1px solid #e6e6e6; background-color: #fff;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><i class="fa fa-rss fa-lg" style="padding-right: 5px;"></i>通知公告</div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="#">【通知】新版员工守则，即日执行</a><span class="time">2016-07-21</span></li>
+                                <li><a href="#">【公告】OA办公使用指南</a><span class="time">2016-07-21</span></li>
+                                <li><a href="#">【公告】劳动节集体出游指南</a><span class="time">2016-07-21</span></li>
+                                <li><a href="#">【通知】2016年G20财长和央行行</a><span class="time">2016-07-21</span></li>
+                                <li><a href="#">【通知】2016年G20财长和央行行</a><span class="time">2016-07-21</span></li>
+                                <li><a href="#">【通知】品牌价值的最佳选择</a><span class="time">2016-07-21</span></li>
+                                <li><a href="#">【公告】采购商城全新升级自营业正品</a><span class="time">2016-07-21</span></li>
+                                <li><a href="#">【公告】采购商城全新升级自营业正品</a><span class="time">2016-07-21</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="float: right; width: 30%;">
+                <div style="height: 265px; border: 1px solid #e6e6e6; background-color: #fff;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><i class="fa fa-send fa-lg" style="padding-right: 5px;"></i>企业文化</div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="#">创新企业党建思想政治工作</a><span class="time">2016-07-02</span></li>
+                                <li><a href="#">现代国有企业道德体系初构</a><span class="time">2016-06-18</span></li>
+                                <li><a href="#">国有企业文化问题根源及文化重塑任务分析</a><span class="time">2016-06-26</span></li>
+                                <li><a href="#">国有企业文化建设必须突出员工文化</a><span class="time">2016-04-20</span></li>
+                                <li><a href="#">加强企业公民建设 推进企业和谐发展</a><span class="time">2016-03-08</span></li>
+                                <li><a href="#">不断提升大庆精神 实现企业持续发展</a><span class="time">2016-02-22</span></li>
+                                <li><a href="#">科学发展作指导 人水和谐路更宽</a><span class="time">2016-02-15</span></li>
+                                <li><a href="#">科学发展作指导 人水和谐路更宽</a><span class="time">2016-02-15</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

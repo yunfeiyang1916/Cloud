@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>漏斗图</title>
+    <link href="~/Content/layouts/css/theme.css" rel="stylesheet" />
+    <script src="~/Content/global/plugins/jquery/jquery-2.1.1.min.js"></script>
+    <script src="~/Content/global/plugins/highcharts/highcharts.js"></script>
+    <script src="~/Content/global/plugins/highcharts/modules/funnel.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#container").highcharts({
+                //图表
+                chart: {
+                    //漏斗图
+                    type: 'funnel',
+                    marginRight: 100
+                },
+                //标题
+                title: {
+                    text: '漏斗图',
+                    x: -50
+                },
+
+                //数据列配置
+                plotOptions: {
+                    series: {
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b> ({point.y:,.0f})',
+                            color: 'black',
+                            softConnector: true
+                        },
+                        neckWidth: '30%',
+                        neckHeight: '25%'
+
+                        //-- Other available options
+                        // height: pixels or percent
+                        // width: pixels or percent
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                //数据列
+                series: [{
+                    name: '独立用户',
+                    data: [
+                        ['网站访问', 15654],
+                        ['下载', 4064],
+                        ['获取价格表', 1987],
+                        ['咨询', 976],
+                        ['收藏', 846]
+                    ]
+                }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container" style="min-width: 310px;max-width:600px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

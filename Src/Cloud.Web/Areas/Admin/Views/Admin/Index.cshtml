@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="cloud.common.reload();"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+        <div id="btnInit" class="btn-group">
+        </div>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtKey" type="text" class="form-control" placeholder="请输入要查询关键字" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btnSearch" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        var options = {
+            //标题
+            title: "管理员管理",
+            //数据查询地址
+            dataQueryUrl: "/Admin/Admin/List",
+            //数据添加地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataAddUrl: "/Admin/Admin/Add",
+            //数据编辑地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataUpdateUrl: "/Admin/Admin/Edit",
+            //数据查看详情地址
+            dataDetailUrl: "/Admin/Admin/Detail",
+            //数据删除地址
+            dataDeleteUrl: "/Admin/Admin/Delete",
+            //弹窗宽度
+            modalWidth: "700px",
+            //弹窗高度
+            modalHeight: "510px",
+        };
+        //视图模型
+        var viewModel = new ViewModel(options);
+        $(function () {
+            //显示列表数据
+            viewModel.showGridList({
+                //获取数据的地址
+                url: viewModel.dataQueryUrl,
+                //列模型
+                colModel: [
+                    { label: "主键", name: "ID", hidden: true, key: true },
+                    {
+                        label: "用户名", name: "Name", width: 80, align: "left"
+                    },
+                    { label: "姓名", name: "DisplayName", width: 80, align: "left" },
+                    {
+                        label: "性别", name: "Sex", width: 80, align: "center",
+                        //数据格式化
+                        formatter: function (value) {
+                            switch (value) {
+                                case 0:
+                                    return "未知";
+                                case 1:
+                                    return "男";
+                                case 2:
+                                    return "女";
+                                default:
+                                    return "未知";
+                            }
+                        }
+                    },
+                    {
+                        label: "电话", name: "Phone", width: 80, align: "left"
+                    },
+                    {
+                        label: "是否启用", name: "Enable", width: 60, align: "center",
+                        formatter: function (value, options, rowObject) {
+                            if (value) {
+                                return '<span class=\"label label-success\">是</span>';
+                            } else {
+                                return '<span class=\"label label-default\">否</span>';
+                            }
+                        }
+                    },
+                     {
+                         label: "登陆次数", name: "Logins", width: 50, align: "center"
+                     },
+                     {
+                         label: "最后登陆", name: "LastLogin", width: 120, align: "center",
+                         formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
+                     },
+                    {
+                        label: "创建时间", name: "CreateDate", width: 120, align: "center",
+                        formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
+                    },
+                    {
+                        label: "更新时间", name: "UpdateDate", width: 120, align: "center",
+                        formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
+                    },
+
+                    {
+                        label: '操作', name: 'ID', width: 250, align: 'center', classes: 'operate', sortable: false,
+                        /**
+                         * 数据格式化
+                         * 参数 value 列值 options 选项 row 行数据
+                         */
+                        formatter: function (value, options, row) {
+                            //设置授权的列表按钮
+                            var html = cloud.auth.grantedButtons({ location: 2, replaceValue: value });
+                            return html;
+                        }
+                    },
+                ],
+                //默认排序字段
+                sortname: "ID",
+                //默认排序顺序
+                sortorder: "asc",
+            });
+            //添加授权的初始按钮
+            $("#btnInit").append(cloud.auth.grantedButtons({ location: 1 }));
+        });
+    </script>
+
+}
+
