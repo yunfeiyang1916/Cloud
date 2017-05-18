@@ -53,6 +53,19 @@
                 //所有同辈元素移除选中样式
                 that.siblings().removeClass("selected");
             });
+            //绑定双击事件，触发提交
+            $("#gridList").on("dblclick.select", "li", function (e) {
+                var that = $(this);
+                //判断点击元素是否已经是选中状态，如果是则触发提交按钮事件
+                if (that.hasClass("selected")) {
+                    var index = top.layer.getFrameIndex(window.frameElement.id); //先得到当前iframe层的索引
+                    var btn = top.$("#layui-layer" + index).find('.layui-layer-btn0');
+                    if (btn) {
+                        btn.trigger("click");
+                    }
+                    return;
+                }
+            });
         });
     </script>
 
